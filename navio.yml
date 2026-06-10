@@ -25,4 +25,5 @@ jobs:
           EMAIL_DESTINO: ${{ secrets.EMAIL_DESTINO }}
           EMAIL_REMETENTE: ${{ secrets.EMAIL_REMETENTE }}
           GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+          DATADOCKED_API_KEY: ${{ secrets.DATADOCKED_API_KEY }}
         run: python buscar_posicao.py
