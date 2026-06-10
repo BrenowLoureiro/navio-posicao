@@ -26,4 +26,15 @@ jobs:
           EMAIL_REMETENTE: ${{ secrets.EMAIL_REMETENTE }}
           GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
           DATADOCKED_API_KEY: ${{ secrets.DATADOCKED_API_KEY }}
-        run: python buscar_posicao.py
+        run: |
+          python -c "
+          import requests, os
+          key = os.getenv('DATADOCKED_API_KEY')
+          mmsi = os.getenv('MMSI')
+          print(f'Key length: {len(key) if key else 0}')
+          print(f'MMSI: {mmsi}')
+          url = f'https://datadocked.com/api/vessels_operations/get-vessel-location?imo_or_mmsi={mmsi}'
+          r = requests.get(url, headers={'x-api-key': key, 'accept': 'application/json'}, timeout=15)
+          print(f'Status: {r.status_code}')
+          print(f'Response: {r.text[:500]}')
+          "
