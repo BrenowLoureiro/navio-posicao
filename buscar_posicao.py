@@ -1,7 +1,7 @@
 import os, smtplib, requests
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
-from datetime import datetime
+from datetime import datetime, timezone, timedelta
 
 MMSI               = os.environ["MMSI"]
 DATADOCKED_API_KEY = os.environ["DATADOCKED_API_KEY"]
