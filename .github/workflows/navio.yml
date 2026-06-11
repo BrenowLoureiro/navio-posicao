@@ -1,0 +1,32 @@
+name: Navio Posicao Diaria
+on:
+  schedule:
+    - cron: '0 9 * * *'
+  workflow_dispatch:
+jobs:
+  buscar-posicao:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Instalar Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      - name: Instalar dependencias
+        run: pip install requests
+      - name: Testar API
+        env:
+          MMSI: ${{ secrets.MMSI }}
+          DATADOCKED_API_KEY: ${{ secrets.DATADOCKED_API_KEY }}
+        run: |
+          python -c "
+          import requests, os
+          key = os.getenv('DATADOCKED_API_KEY', '')
+          mmsi = os.getenv('MMSI', '')
+          print('Key length:', len(key))
+          print('MMSI length:', len(mmsi))
+          url = 'https://datadocked.com/api/vessels_operations/get-vessel-location?imo_or_mmsi=' + mmsi
+          r = requests.get(url, headers={'x-api-key': key, 'accept': 'application/json'}, timeout=15)
+          print('Status:', r.status_code)
+          print('Response:', r.text[:500])
+          "
