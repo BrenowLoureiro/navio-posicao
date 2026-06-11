@@ -18,7 +18,8 @@ print(f"Status: {r.status_code}")
 print(f"Response: {r.text[:500]}")
 r.raise_for_status()
 
-v    = r.json()["detail"]
+data = r.json()
+v    = data.get("detail") or data
 lat  = float(v["latitude"])
 lon  = float(v["longitude"])
 agora = datetime.utcnow().strftime("%d/%m/%Y %H:%M UTC")
