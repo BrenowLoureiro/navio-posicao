@@ -42,7 +42,8 @@ def decimal_para_gms(decimal, tipo):
 lat_gms = decimal_para_gms(lat, "lat")
 lon_gms = decimal_para_gms(lon, "lon")
 
-agora = datetime.utcnow().strftime("%d/%m/%Y %H:%M UTC")
+brt = timezone(timedelta(hours=-3))
+agora = datetime.now(brt).strftime("%d/%m/%Y %H:%M BRT")
 maps  = f"https://www.google.com/maps?q={lat},{lon}"
 mt    = f"https://www.marinetraffic.com/en/ais/details/ships/mmsi:{MMSI}"
 
